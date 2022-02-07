@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoardLook.cs" />
     <Compile Include="TxtReader.cs" />
     <Compile Include="Difficulty.cs" />
     <Compile Include="Board.cs" />

@@ -4,7 +4,7 @@ namespace MemoryGame
 {
     public class Difficulty
     {
-        private Random random;
+        private Random random = new Random();
         private TxtReader _gameFile = new TxtReader(@"C:\Words.txt");
         private readonly string[,] _slogans;
 
@@ -18,23 +18,25 @@ namespace MemoryGame
             } else if (difficultyType == 1)
             {
                 _slogans = new string[16, 2];
+                
             }
         }
 
         //Assigning slogans to array cells
         public string [,] getSlogans()
         {
-            for (int i = 0; i < _slogans.Length / 2; i++)
+            for (int i = 0; i < _slogans.GetLength(0) / 2; i++)
             {
-                _slogans[i, 0] = _gameFile.WordsArray()[random.Next()];
+                _slogans[i, 0] = _gameFile.WordsArray()[random.Next(_gameFile.WordsArray().Length - 1)];
             }
 
-            for (int i = _slogans.Length / 2; i < _slogans.Length; i++)
+            for (int i = _slogans.GetLength(0) / 2; i < _slogans.GetLength(0); i++)
             {
-                _slogans[i, 0] = _slogans[random.Next(0, _slogans.Length / 2 - 1), 0];
+                Array.
+                _slogans[i, 0] = _slogans[random.Next(0, _slogans.GetLength(0) / 2 - 1), 0];
             }
 
-            for (int i = 0; i < _slogans.Length; i++)
+            for (int i = 0; i < _slogans.GetLength(0); i++)
             {
                 _slogans[i, 1] = _sloganMarker;
             }

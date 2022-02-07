@@ -10,7 +10,10 @@ namespace MemoryGame
     {
         static void Main(string[] args)
         {
-            
+            Difficulty difficulty = new Difficulty(0);
+            Board board = new Board();
+
+             board.drawBoard(difficulty.getSlogans());
         }
     }
 }
