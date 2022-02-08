@@ -9,13 +9,18 @@ namespace MemoryGame
 {
     public class TxtReader
     {
-        private StreamReader _path = null;
-        private string[] _allWordsTab;
+        private static string _path = null;
+        private StreamReader _pathToRead = null;
+        private readonly string[] _allWordsTab;
+
+        public static string GetPath { get => _path; }
 
         public TxtReader(string input)
         {
-            _path = File.OpenText(input);
-            _allWordsTab = _path.ReadToEnd().Split('\n');
+            _path = input;
+            _pathToRead = File.OpenText(_path);
+            _allWordsTab = _pathToRead.ReadToEnd().Split('\n');
+            _pathToRead.Close();
 
         }
 
@@ -23,5 +28,8 @@ namespace MemoryGame
         {
             return _allWordsTab;
         }
+
+        
     }
+   
 }

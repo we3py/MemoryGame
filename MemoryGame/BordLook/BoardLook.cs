@@ -8,8 +8,8 @@ namespace MemoryGame
 {
     public class BoardLook
     {
-        private char _gameField = '?';
-        public char GameField => _gameField;
+        private string _gameField;
+        public string GameField { get => _gameField; set => _gameField =  "?"; }
         public enum Rows
         {
             A = 0,

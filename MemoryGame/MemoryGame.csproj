@@ -43,7 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoardLook.cs" />
+    <Compile Include="BordLook\BoardLook.cs" />
+    <Compile Include="BordLook\SimpleLook.cs" />
     <Compile Include="TxtReader.cs" />
     <Compile Include="Difficulty.cs" />
     <Compile Include="Board.cs" />
@@ -53,8 +54,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Grids\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
