@@ -6,70 +6,78 @@ namespace MemoryGame
 {
     public class Board
     {
-        public BoardLook boardLook = new BoardLook();
-        const int ColGap = 10;
+        const int ColGap = 12;
         const int RowGap = 5;
+        private BoardLook _boardLook;
+        private HighScore _highscore;
+        private string[,] array;
+        private bool[,] markers;
+        
+        public Board(BoardLook boardlook, HighScore highScore)
+        {
+            _boardLook = boardlook;
+            array = _boardLook.GetDifficulty.AssignSlogans();
+            markers = _boardLook.GetDifficulty.GetMarkers();
+            _highscore = highScore;
+            Console.SetWindowSize(170, 30);
+
+
+        }
         public void DrawBoard(Difficulty difficulty)
         {
-            var slogansBoard = difficulty.GetSlogans();
-            var markers = difficulty.GetMarkers();
-            var longestSlogan = LongestSlogan(difficulty.GameFile.WordsArray());
-            var bufferHeight = slogansBoard.GetLength(0) * (ColGap + longestSlogan);
-            SetBufferSize(bufferHeight, Console.BufferHeight);
-            
+            var cellHeight = _boardLook.CellHeight();
+            var cellWidth = _boardLook.CellWidth();
+            Console.Clear();
+            Console.WriteLine("Your points: " + _highscore.LifePoints);
+            Console.WriteLine("Level: " + (Difficulty.difficultyType) _highscore.DifficultyType);
+            Console.SetCursorPosition(0, 5);
 
-            for (int i = 0; i < slogansBoard.GetLength(1); i++)
+            for (int i = 0; i < array.GetLength(1); i++)
             {
+                
                 SetRowSign(i + 1);
                 Console.WriteLine((BoardLook.Rows)i);
 
-                for (int j = 0; j < slogansBoard.GetLength(0); j++)
+                for (int j = 0; j < array.GetLength(0); j++)
                 {
-                    SetCursorCol(longestSlogan, j + 1);
+                    SetCursorCol(cellWidth, j + 1);
                     Console.WriteLine(j + 1);
+                    var slogan = _boardLook.PrintSlogan(array, j, i);
 
-                    if (markers[j, 0])
-                    {
-                        SetRowSign(5);
-                        SetCursorSlogan(slogansBoard[j, 0], longestSlogan, j + 1, 1);
-                        Console.WriteLine(slogansBoard[j, 0]);
+
+                    if (markers[j, i])
+                    {                       
+                        SetCursorSlogan(slogan.Length, cellWidth, j + 1, i + 1);
+                        Console.WriteLine(_boardLook.PrintSlogan(array, j, i));
                     }
-                }
-                
-                
+                    else
+                    {
+                        slogan = _boardLook.GameField;
+                        SetCursorSlogan(slogan.Length, cellWidth, j + 1, i + 1);
+                        Console.WriteLine(slogan);
+                    }
+                    
+                    Console.WriteLine();
+
+                }               
             }
 
             
-
         }
 
-        // Sets cursor posistion to write column signs depending on the longest word in array which player need to guess
-        private void SetCursorCol(string[,] slogansBoard, int col)
-        {
-            int wordLength = LongestSlogan(slogansBoard);
-            int x = ColGap * col + wordLength / 2 * col;
-           
-            Console.SetCursorPosition(0, 0);
-            Console.SetCursorPosition(x, 0);
-            
-        }
 
+        
         // Sets cursor position to write column signs depending on given length 
         private void SetCursorCol(int length, int col)
         {
             int x = ColGap * col + length / 2 * col;
 
             Console.SetCursorPosition(0, 0);
-            Console.SetCursorPosition(x, 0);
+            Console.SetCursorPosition(x, RowGap);
 
         }
 
-        // Sets cursor posistion to write row signs
-        private void SetRowSign(int row)
-        {
-            int y = RowGap * row;
-            Console.SetCursorPosition(0, y);
-        }
+        
 
         // Sets cursor position to write slogans in correct spot
         private void SetCursorSlogan(string slogan, int length, int col, int row)
@@ -81,26 +89,33 @@ namespace MemoryGame
             
         }
 
-        private void SetBufferSize(int height, int width)
+        // 
+        private void SetCursorSlogan(int cellLength, int length, int col, int row)
         {
+            SetCursorCol(length, col);
+            int x = Console.CursorLeft - cellLength / 2;
+            SetRowSign(row);
+            Console.SetCursorPosition(x, Console.CursorTop);
+
+        }
+
+        // Sets cursor posistion to write row signs
+        private void SetRowSign(int row)
+        {
+            int y = RowGap * row;
+            Console.SetCursorPosition(0, y + RowGap);
+        }
+
+        private void SetWindowSize(int height, int width)
+        {
+            Console.WindowHeight = height;
+            Console.WindowWidth = width;    
             Console.BufferHeight = height;
             Console.BufferWidth = width;
         }
 
 
-        private int LongestSlogan(string[] slogansFile)
-        {
-            int max = slogansFile[0].Length;
-            for (int i = 0; i < slogansFile.Length; i++)
-            {
-                if (slogansFile[i].Length > max)
-                {
-                    max = slogansFile[i].Length;
-                }
-            }
-
-            return max;
-        }
+        
 
         private int LongestSlogan(string[,] slogansBoard)
         {

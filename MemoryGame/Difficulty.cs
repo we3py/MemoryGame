@@ -7,18 +7,20 @@ namespace MemoryGame
     public class Difficulty
     {
         private Random random = new Random();
-        private TxtReader _gameFile = new TxtReader(@"C:\Words.txt");
+        private TxtReader _gameFile = new TxtReader(@"Words.txt");
+        private int _difficulty;
         private readonly string[,] _slogans;
         private readonly bool[,] _markers;
 
         public TxtReader GameFile { get => _gameFile;}
-
+        public int GetDifficultyType { get => _difficulty; }
         public Difficulty(int difficultyType)
         {            
-            if (difficultyType == 0)
+            _difficulty = difficultyType;
+            if (_difficulty == 0)
             {
                 _slogans = new string[4, 2];
-            } else if (difficultyType == 1)
+            } else if (_difficulty == 1)
             {
                 _slogans = new string[8, 2];                
             }
@@ -27,7 +29,7 @@ namespace MemoryGame
         }
 
         // Using SlogansAssign() method we are getting number of words which are depends on difficulty level
-        public string [,] GetSlogans()
+        public string [,] AssignSlogans()
         {
             string[] tempArray = SlogansAssign();
             for (int i = 0; i < _slogans.GetLength(0); i++)
@@ -67,23 +69,34 @@ namespace MemoryGame
         }
 
         public bool[,] GetMarkers()
+        {                       
+            return _markers;
+        }
+
+        public string[,] GetSlogans()
         {
-            
+            return _slogans;
+        }
+
+        public bool ResultCheck()
+        {
             for (int i = 0; i < _markers.GetLength(1); i++)
             {
                 for (int j = 0; j < _markers.GetLength(0); j++)
                 {
-                    _markers[j, i] = true;
+                    if (!_markers[j,i])
+                    {
+                        return false;
+                    }
                 }
             }
-
-            return _markers;
+            return true;
         }
 
-        public bool AnswerCheck(string answerOne, string answerTwo)
+        public enum difficultyType
         {
-
-            return true;
+            Easy = 0,
+            Hard = 0,
         }
     }
 }
