@@ -10,7 +10,7 @@ namespace MemoryGame
 {
     internal class Program
     {
-        //Testing game
+        
         static void Main(string[] args)
         {
 
@@ -62,12 +62,13 @@ namespace MemoryGame
                         Console.ReadLine();
                         Console.Clear();
                         continue;
-                    case 1:                       
-                        isPlaying = false;
+                    case 1:
+                        Console.WriteLine("Showing highscore");
                         break;
                     case 2:
-                        Console.WriteLine("Showing highscore");                       
+                        isPlaying = false;
                         break;
+                        
                 }
 
                 break;

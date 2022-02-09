@@ -44,8 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BordLook\BoardLook.cs" />
-    <Compile Include="BordLook\AsciiLook.cs" />
+    <Compile Include="BordLooks\BoardLook.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="HighScore.cs" />
     <Compile Include="TxtReader.cs" />
