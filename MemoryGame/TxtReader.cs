@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MemoryGame
 {
@@ -11,8 +7,7 @@ namespace MemoryGame
     {
         private static string _path;
         private string _currentDirectory;
-        private DirectoryInfo _directoryInfo;
-        
+        private DirectoryInfo _directoryInfo;       
         private readonly string[] _allWordsTab;
 
         public static string GetPath { get => _path; }
@@ -21,7 +16,6 @@ namespace MemoryGame
         {            
             _path = GetCurrentDir(input);
             _allWordsTab = File.ReadAllLines(_path);
-
         }
 
         public string[] WordsArray()
@@ -34,9 +28,7 @@ namespace MemoryGame
             _currentDirectory = Environment.CurrentDirectory;
             _directoryInfo = new DirectoryInfo(Path.GetFullPath(Path.Combine(_currentDirectory, @"..\..\files\" + fileName)));
             return _directoryInfo.ToString();
-        }
-
-        
+        }       
     }
    
 }

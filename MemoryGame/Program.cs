@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace MemoryGame
 {
-    internal class Program
+    public class Program
     {
         
         static void Main(string[] args)
         {
-
-
-            Regex regex = new Regex("^[0-2]");
+            Regex regexCommand = new Regex("^[0-3]");
             Regex difficultyRegex = new Regex("^[0-1]");
             bool isPlaying = true;
+            Game newGame = new Game(0);
+
             while (isPlaying)
             {
                 Console.WriteLine(BoardLook.GetLogo());
@@ -26,7 +21,7 @@ namespace MemoryGame
                 
 
                 string command = Console.ReadLine().Trim();
-                if (!regex.IsMatch(command) || String.IsNullOrEmpty(command) || command.Length > 1)
+                if (!regexCommand.IsMatch(command) || String.IsNullOrEmpty(command) || command.Length > 1)
                 {
                     Console.Clear();
                     continue;
@@ -55,7 +50,7 @@ namespace MemoryGame
                         }
                         
 
-                        Game newGame = new Game(Int32.Parse(level));
+                        newGame = new Game(Int32.Parse(level));
                         Console.Clear();
                         newGame.Run();
                         Console.WriteLine("If u want start a new game, press ENTER");
@@ -63,16 +58,26 @@ namespace MemoryGame
                         Console.Clear();
                         continue;
                     case 1:
-                        Console.WriteLine("Showing highscore");
-                        break;
+                        Console.Clear();
+                        newGame.Highscore.LoadHighScore();
+                        Console.WriteLine("Press ENTER to back");
+                        Console.ReadLine();
+                        Console.Clear();
+                        continue; 
                     case 2:
+                        Console.Clear();
+                        newGame.Highscore.ClearHighscore();
+                        Console.WriteLine("Highscore cleared");
+                        Console.WriteLine("Press ENTER to back");
+                        Console.ReadLine();
+                        Console.Clear();
+                        continue;
+                    case 3:
                         isPlaying = false;
-                        break;
-                        
+                        break;                                             
                 }
 
-                break;
-                
+                break;               
             }
 
 

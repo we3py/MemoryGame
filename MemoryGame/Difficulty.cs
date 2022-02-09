@@ -6,7 +6,7 @@ namespace MemoryGame
 {
     public class Difficulty
     {
-        private Random random = new Random();
+        private Random _random = new Random();
         private TxtReader _gameFile = new TxtReader(@"Words.txt");
         private int _difficulty;
         private readonly string[,] _slogans;
@@ -37,7 +37,7 @@ namespace MemoryGame
                 _slogans[i, 0] = tempArray[i];
             }
 
-            tempArray = tempArray.OrderBy(x => random.Next()).ToArray();
+            tempArray = tempArray.OrderBy(x => _random.Next()).ToArray();
 
             for (int i = 0; i < _slogans.GetLength(0); i++)
             {
@@ -54,7 +54,7 @@ namespace MemoryGame
             string[] tempArray = new string[_slogans.GetLength(0)];
             for (int i = 0; i < tempArray.Length; i++)
             {
-                slogan = GameFile.WordsArray()[random.Next(GameFile.WordsArray().Length - 1)];
+                slogan = GameFile.WordsArray()[_random.Next(GameFile.WordsArray().Length - 1)];
                 if (Array.Find(tempArray, x => x == slogan) != null)
                 {
                     i--;
@@ -90,6 +90,7 @@ namespace MemoryGame
                     }
                 }
             }
+
             return true;
         }
 

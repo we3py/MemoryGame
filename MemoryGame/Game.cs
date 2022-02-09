@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MemoryGame
 {
     public class Game
     {
-        private Difficulty difficulty;
-        private BoardLook boardLook;
-        private Board board;
-        private HighScore highscore;
+        private Difficulty _difficulty;
+        private BoardLook _boardLook;
+        private Board _board;
+        private HighScore _highscore;
+
+        public HighScore Highscore { get => _highscore; }
 
         public Game(int level)
         {            
-            difficulty = new Difficulty(level);
-            boardLook = new BoardLook(difficulty);           
-            highscore = new HighScore(difficulty);
-            board = new Board(boardLook, highscore);
+            _difficulty = new Difficulty(level);
+            _boardLook = new BoardLook(_difficulty);           
+            _highscore = new HighScore(_difficulty, @"Highscore.txt");
+            _board = new Board(_boardLook, _highscore);
         }
         public void Run()
         {           
@@ -28,7 +27,7 @@ namespace MemoryGame
             while (true)
             {
                 
-                board.DrawBoard(difficulty);
+                _board.DrawBoard(_difficulty);
                 Console.WriteLine();
 
                 Console.WriteLine("Choose your FIRST answer: ");
@@ -49,27 +48,39 @@ namespace MemoryGame
                     continue;
                 }
 
-                if (!AnswerComparison(boardLook.GetDifficulty.GetSlogans(), first, second))
+                if (!AnswerComparison(_boardLook.GetDifficulty.GetSlogans(), first, second))
                 {
-                    highscore.LifePoints = highscore.LifePoints - 1;
+                    _highscore.LifePoints = _highscore.LifePoints - 1;
                 }
 
-                highscore.TotalAttempts += 1;
+                _highscore.TotalAttempts += 1;
 
-                if (highscore.LifePoints == 0)
+                if (_highscore.LifePoints == 0)
                 {
                     Console.WriteLine("U LOSE - GAME OVER");
                     
                     break;
                 }
-                else if (difficulty.ResultCheck())
+                else if (_difficulty.ResultCheck())
                 {
                     int time;
                     Console.WriteLine("Congratulations! U WON");
-                    Console.WriteLine("You play {0} seconds", time = highscore.GetGameTime());
+                    Console.WriteLine("You play {0} seconds", time = _highscore.GetGameTime());
                     Console.WriteLine("Type your name: ");
-                    highscore.Name = Console.ReadLine().Trim();
-                    Console.WriteLine(highscore.finalScore(time));
+                    _highscore.Name = Console.ReadLine().Trim();
+                    Console.WriteLine(_highscore.finalScore(time));
+
+                    Console.WriteLine("Do u want to save your score? Type: Y-YES or other keyword to exit and press ENTER");
+                    string decision = Console.ReadLine();
+
+                    Regex decisionCheck = new Regex(@"^[yY]");
+
+                    if (!decisionCheck.IsMatch(decision) || String.IsNullOrEmpty(decision) || (decision.Length > 1))
+                    {
+                        break;
+                    }
+                    else
+                        _highscore.SaveScoreToFile(_highscore.finalScore(time));
                     
                     break;
 
@@ -81,7 +92,7 @@ namespace MemoryGame
         private void HideAnswer(string firstTry)
         {
             var firstAnswer = AnswerRead(firstTry);
-            var markers = difficulty.GetMarkers();
+            var markers = _difficulty.GetMarkers();
             markers[firstAnswer[0], firstAnswer[1]] = false;
         }
 
@@ -89,7 +100,7 @@ namespace MemoryGame
         private bool ShowAnswer(string firstTry)
         {
             var firstAnswer = AnswerRead(firstTry);
-            var markers = difficulty.GetMarkers();
+            var markers = _difficulty.GetMarkers();
 
             if (firstAnswer == null)
             {
@@ -103,9 +114,8 @@ namespace MemoryGame
                 return false;
             }
 
-
             markers[firstAnswer[0], firstAnswer[1]] = true;
-            board.DrawBoard(difficulty);
+            _board.DrawBoard(_difficulty);
 
             Console.WriteLine();
 
@@ -115,10 +125,9 @@ namespace MemoryGame
         // Uncovering second word, int this method additionaly checks if we choose wrod from the same row
         private bool ShowAnswer(string firstTry, string secondTry)
         {
-
             var firstAnswer = AnswerRead(firstTry);
             var secondAnswer = AnswerRead(secondTry);
-            var markers = difficulty.GetMarkers();
+            var markers = _difficulty.GetMarkers();
 
             if (secondAnswer == null)
             {
@@ -138,7 +147,7 @@ namespace MemoryGame
             }
 
             markers[secondAnswer[0], secondAnswer[1]] = true;
-            board.DrawBoard(difficulty);
+            _board.DrawBoard(_difficulty);
 
             Console.WriteLine();
 
@@ -149,7 +158,7 @@ namespace MemoryGame
         private int[] AnswerRead(string answerGiven)
         {
             string answerToRead = answerGiven.Trim();
-            string pattern = @"^[a-bA-B1-" + difficulty.GetSlogans().GetLength(0) + "]*$";
+            string pattern = @"^[a-bA-B1-" + _difficulty.GetSlogans().GetLength(0) + "]*$";
             var regex = new Regex(pattern);
             int[] answer = new int[2];
             
@@ -180,7 +189,7 @@ namespace MemoryGame
             {
                 return true;
             }
-            var markers = difficulty.GetMarkers();
+            var markers = _difficulty.GetMarkers();
             var comparison = array[firstAnswer[0], firstAnswer[1]] == array[secondAnswer[0], secondAnswer[1]];
             
             // Checks if given coordinates are in valid range
@@ -221,8 +230,7 @@ namespace MemoryGame
                 markers[firstAnswer[0], firstAnswer[1]] = false;
                 markers[secondAnswer[0], secondAnswer[1]] = false;
                 return false;
-            }
-            
+            }           
         }
     }
 }

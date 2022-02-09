@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 
 namespace MemoryGame
@@ -10,19 +9,18 @@ namespace MemoryGame
         const int RowGap = 5;
         private BoardLook _boardLook;
         private HighScore _highscore;
-        private string[,] array;
-        private bool[,] markers;
+        private string[,] _array;
+        private bool[,] _markers;
         
         public Board(BoardLook boardlook, HighScore highScore)
         {
             _boardLook = boardlook;
-            array = _boardLook.GetDifficulty.AssignSlogans();
-            markers = _boardLook.GetDifficulty.GetMarkers();
+            _array = _boardLook.GetDifficulty.AssignSlogans();
+            _markers = _boardLook.GetDifficulty.GetMarkers();
             _highscore = highScore;
             Console.SetWindowSize(170, 30);
-
-
         }
+
         public void DrawBoard(Difficulty difficulty)
         {
             var cellHeight = _boardLook.CellHeight();
@@ -32,23 +30,23 @@ namespace MemoryGame
             Console.WriteLine("Level: " + (Difficulty.difficultyType) _highscore.DifficultyType);
             Console.SetCursorPosition(0, 5);
 
-            for (int i = 0; i < array.GetLength(1); i++)
+            for (int i = 0; i < _array.GetLength(1); i++)
             {
                 
                 SetRowSign(i + 1);
                 Console.WriteLine((BoardLook.Rows)i);
 
-                for (int j = 0; j < array.GetLength(0); j++)
+                for (int j = 0; j < _array.GetLength(0); j++)
                 {
                     SetCursorCol(cellWidth, j + 1);
                     Console.WriteLine(j + 1);
-                    var slogan = _boardLook.PrintSlogan(array, j, i);
+                    var slogan = _boardLook.PrintSlogan(_array, j, i);
 
 
-                    if (markers[j, i])
+                    if (_markers[j, i])
                     {                       
                         SetCursorSlogan(slogan.Length, cellWidth, j + 1, i + 1);
-                        Console.WriteLine(_boardLook.PrintSlogan(array, j, i));
+                        Console.WriteLine(_boardLook.PrintSlogan(_array, j, i));
                     }
                     else
                     {
@@ -60,9 +58,7 @@ namespace MemoryGame
                     Console.WriteLine();
 
                 }               
-            }
-
-            
+            }           
         }
 
 
@@ -74,19 +70,16 @@ namespace MemoryGame
 
             Console.SetCursorPosition(0, 0);
             Console.SetCursorPosition(x, RowGap);
-
         }
 
         
-
         // Sets cursor position to write slogans in correct spot
         private void SetCursorSlogan(string slogan, int length, int col, int row)
         {
             SetCursorCol(length, col);
             int x = Console.CursorLeft - slogan.Length / 2;
             SetRowSign(row);
-            Console.SetCursorPosition(x, Console.CursorTop);
-            
+            Console.SetCursorPosition(x, Console.CursorTop);           
         }
 
         // 
@@ -96,7 +89,6 @@ namespace MemoryGame
             int x = Console.CursorLeft - cellLength / 2;
             SetRowSign(row);
             Console.SetCursorPosition(x, Console.CursorTop);
-
         }
 
         // Sets cursor posistion to write row signs
@@ -133,7 +125,5 @@ namespace MemoryGame
 
             return max;
         }
-
-
     }
 }

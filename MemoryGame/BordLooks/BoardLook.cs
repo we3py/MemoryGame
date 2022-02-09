@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MemoryGame
+﻿namespace MemoryGame
 {
     public class BoardLook
     {
@@ -91,9 +84,14 @@ GOOD LUCK BUDDY!";
 |T|Y|P|E| |N|U|M|B|E|R| |1| |t|o| |O|P|E|N| |H|I|G|H|S|C|O|R|E|
 +-+-+-+-+ +-+-+-+-+-+-+ +-+ +-+-+ +-+-+-+-+ +-+-+-+-+-+-+-+-+-+
 
++-+-+-+-+ +-+-+-+-+-+-+ +-+ +-+-+ +-+-+-+-+-+ +-+-+-+-+-+-+-+-+-+
+|T|Y|P|E| |N|U|M|B|E|R| |2| |t|o| |C|L|E|A|R| |H|I|G|H|S|C|O|R|E|
++-+-+-+-+ +-+-+-+-+-+-+ +-+ +-+-+ +-+-+-+-+-+ +-+-+-+-+-+-+-+-+-+
+
 +-+-+-+-+ +-+-+-+-+-+-+ +-+ +-+-+ +-+-+-+-+
-|T|Y|P|E| |N|U|M|B|E|R| |2| |t|o| |E|X|I|T|
-+-+-+-+-+ +-+-+-+-+-+-+ +-+ +-+-+ +-+-+-+-+";
+|T|Y|P|E| |N|U|M|B|E|R| |3| |t|o| |E|X|I|T|
++-+-+-+-+ +-+-+-+-+-+-+ +-+ +-+-+ +-+-+-+-+
+";
         }
 
         public static string GetDifficultyQuestion()
@@ -107,8 +105,5 @@ GOOD LUCK BUDDY!";
 1 - HARD";
 
         }
-
-
-
     }
 }
