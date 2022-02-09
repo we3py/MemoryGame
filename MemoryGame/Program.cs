@@ -41,7 +41,7 @@ namespace MemoryGame
                         {    
                             if (!difficultyRegex.IsMatch(level) || String.IsNullOrEmpty(level) || level.Length > 1)
                             {
-                                Console.WriteLine("Choose level");
+                                Console.WriteLine(BoardLook.GetDifficultyQuestion());
                                 level = Console.ReadLine();
                                 Console.Clear();                               
                                 continue;
