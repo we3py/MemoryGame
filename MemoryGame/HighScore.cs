@@ -60,19 +60,7 @@ namespace MemoryGame
                 i++;
             }
         }
-
-        public void LoadBestHighscore()
-        {
-            string highscoreDir = _reader.GetCurrentDir(@"Highscore.txt");
-            var highScore = File.ReadAllLines(highscoreDir);
-            int i = 0;
-            while (i == 10 || i < highScore.Length)
-            {
-                Console.WriteLine(highScore[i]);
-                i++;
-            }
-        }
-
+       
         public void ClearHighscore()
         {
             string highscoreDir = _reader.GetCurrentDir(@"Highscore.txt");
